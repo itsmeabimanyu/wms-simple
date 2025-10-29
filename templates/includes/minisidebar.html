@@ -1,0 +1,141 @@
+{% load static %}
+<aside class="sidebar-mini">
+  <ul>
+    <li>
+      <a href="#">
+        <iconify-icon icon="solar:home-2-bold-duotone"></iconify-icon>
+        <span class="menu-text">Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <iconify-icon icon="solar:table-bold-duotone"></iconify-icon>
+        <span class="menu-text">Tables</span>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <iconify-icon icon="solar:database-bold-duotone"></iconify-icon>
+        <span class="menu-text">Master Data</span>
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>
+        <span class="menu-text">Settings</span>
+      </a>
+    </li>
+  </ul>
+</aside>
+
+
+<style>
+/* ==== Sidebar Mini (ikon) ==== */
+/* Sidebar Mini */
+.sidebar-mini {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70px;
+  height: 100vh;
+  background-color: #1e1e2f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  z-index: 1100;
+}
+
+.sidebar-mini ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-mini li {
+  position: relative;
+  margin: 25px 0;
+}
+
+.sidebar-mini a {
+  color: #fff;
+  font-size: 26px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Teks menu tersembunyi default */
+  .menu-text {
+  position: absolute;
+  left: 35px;   
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.3s ease;
+  color: #fff; /* teks tetap putih */
+  background-color: #1e1e2f; /* sama dengan sidebar mini */
+  padding: 15px 15px; /* beri jarak supaya tidak menempel ikon */
+  border-radius: 4px; /* opsional, supaya terlihat lebih modern */
+  pointer-events: none;
+  font-size: 18px;
+}
+
+
+/* Hover ikon → teks muncul slide ke kanan */
+.sidebar-mini li:hover .menu-text {
+  opacity: 1;
+  transform: translateX(10px);
+}
+
+/* Efek hover ikon */
+.sidebar-mini li:hover iconify-icon {
+  color: #4fc3f7;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+/* ==== Sidebar utama ==== */
+.sidebar-nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 70px; /* nempel setelah sidebar-mini */
+  width: 250px; /* samakan dengan margin-left di .main-wrapper */
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+/* ==== Perbaiki main-wrapper bawaan agar tidak ketumpuk ==== */
+.main-wrapper {
+  margin-left: 320px !important; /* 70px (mini) + 250px (sidebar utama) */
+  transition: all 0.3s ease-out;
+}
+
+/* ==== Saat sidebar collapse (PlainAdmin .active class) ==== */
+.main-wrapper.active {
+  margin-left: 70px !important; /* hanya sidebar-mini terlihat */
+}
+
+/* ==== Responsif (kecilkan di mobile) ==== */
+@media (max-width: 991px) {
+  .sidebar-nav-wrapper {
+    left: -250px;
+    transition: all 0.3s ease;
+  }
+
+  .sidebar-nav-wrapper.active {
+    left: 70px;
+  }
+
+  .main-wrapper {
+    margin-left: 70px !important;
+  }
+}
+
+
+</style>

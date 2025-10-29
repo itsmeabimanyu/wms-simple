@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="vertical" data-boxed-layout="boxed" data-card="shadow"><head>
+<head>
+    {% include 'includes/head.html' %}
+</head>
+
+<body>
+    <!-- ======== Preloader =========== -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- ======== Preloader =========== -->
+
+    <!-- ======== sidebar-nav start =========== -->
+    {% include 'includes/sidebar.html' %} 
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+        
+        {% include 'includes/topbar.html' %} 
+            <!-- ========== section start ========== -->
+            <section class="section">
+                <div class="container-fluid">
+                    <!-- ========== title-wrapper start ========== -->
+                    <div class="title-wrapper pt-30">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                            <div class="title">
+                                <h3>eCommerce Dashboard</h3>
+                            </div>
+                            </div>
+                            <!-- end col -->
+                            <div class="col-md-6">
+                                <div class="breadcrumb-wrapper">
+                                    <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                        <a href="#0">Dashboard</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                        eCommerce
+                                        </li>
+                                    </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                    <!-- end row -->
+                    </div>
+                    <!-- ========== title-wrapper end ========== -->
+                    {% block content %}{% endblock content %}
+                </div>
+            </section>
+            <!-- ========== footer start =========== -->
+            <footer class="footer">
+                <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 order-last order-md-first">
+                    <div class="copyright text-center text-md-start">
+                        <p class="text-sm">
+                        Designed and Developed by
+                        <a href="https://plainadmin.com" rel="nofollow" target="_blank">
+                            PlainAdmin
+                        </a>
+                        </p>
+                    </div>
+                    </div>
+                    <!-- end col-->
+                    <div class="col-md-6">
+                    <div class="terms d-flex justify-content-center justify-content-md-end">
+                        <a href="#0" class="text-sm">Term & Conditions</a>
+                        <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+                    </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                </div>
+                <!-- end container -->
+            </footer>
+            <!-- ========== footer end =========== -->
+            
+    </main>
+
+    {% include 'includes/scripts.html' %} 
+</body>
+</html>
