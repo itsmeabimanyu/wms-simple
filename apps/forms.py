@@ -29,3 +29,17 @@ class WarehouseForm(forms.ModelForm):
                 self.fields['tgl_mulai_kontrak'].initial = kontrak.tgl_mulai_kontrak.strftime('%d-%m-%Y')
                 self.fields['tgl_akhir_kontrak'].initial = kontrak.tgl_akhir_kontrak.strftime('%d-%m-%Y')
         """
+
+class SearchForm(forms.Form):
+    search = forms.CharField(
+        required=False,
+        label='',
+        widget=forms.TextInput(
+            attrs={
+                'type': 'search',
+                'class': 'form-control pe-5',
+                'placeholder': 'Search...',
+                'aria-label': 'Search',
+            }
+        )
+    )

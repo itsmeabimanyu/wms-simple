@@ -4,7 +4,7 @@ from django.views.generic import (
     TemplateView, UpdateView
 )
 from .forms import (
-    WarehouseForm
+    WarehouseForm, SearchForm
 )
 
 from .models import (
@@ -89,6 +89,7 @@ menu_sections = [
                 "items": [
                     {"name": "Warehouse", "url": "warehouseview"},
                     {"name": "Zone", "url": "warehouseview"},
+                    {"name": "Storage Loc.", "url": "warehouseview"},
                 ],
             },
         ],
@@ -96,19 +97,19 @@ menu_sections = [
 ]
 
 NEW_BUTTON = """
-    <button type="button" class="main-btn btn-sm deactivate-btn-group">
+    <button type="button" class="main-btn btn-sm deactivate-btn-group text-muted">
         <iconify-icon icon="solar:add-square-broken" class="fs-4"></iconify-icon> 
     </button>
 """
 
 EDIT_BUTTON = """
-    <button type="button" class="main-btn btn-sm deactivate-btn-group">
+    <button type="button" class="main-btn btn-sm deactivate-btn-group text-muted">
         <iconify-icon icon="solar:pen-new-square-broken" class="fs-4"></iconify-icon> 
     </button>
 """
 
 COPY_BUTTON = """
-    <button type="button" class="main-btn btn-sm deactivate-btn-group">
+    <button type="button" class="main-btn btn-sm deactivate-btn-group text-muted">
         <iconify-icon icon="solar:document-text-linear" class="fs-4"></iconify-icon> 
     </button>
 """
@@ -116,11 +117,11 @@ COPY_BUTTON = """
 SAVE_BUTTON = """
     <button type="submit"
         name="action" value="save" class="main-btn btn-sm secondary-btn btn-hover">
-        <iconify-icon icon="solar:check-square-broken" class="fs-4"></iconify-icon> Save
+        <iconify-icon icon="solar:check-square-broken" class="fs-4"></iconify-icon>
     </button>  
 """   
 DELETE_BUTTON = """
-    <button type="button" class="main-btn btn-sm deactivate-btn-group">
+    <button type="button" class="main-btn btn-sm deactivate-btn-group text-muted">
         <iconify-icon icon="solar:eraser-square-broken" class="fs-4"></iconify-icon>
     </button>
 """   
@@ -142,20 +143,7 @@ class CreateWarehouse(TemplateView):
         }
 
         context['form'] = WarehouseForm
-        context['navlink'] = f"""
-            {new_button}
-            {edit_button}
-            {copy_button}
-            {delete_button}
-        """
-        context['save_button'] = f"""
-            {save_button}
-        """
-        context['navtab'] = f"""
-            <a class="nav-link active" data-toggle="tab" href="#tab1"> Item Entry</a>
-            <a class="nav-link" data-toggle="tab" href="#tab2">Item List</a>
-        """
-
+        context['form_search'] = SearchForm(self.request.GET or None)
         items = Warehouse.objects.all()
         for item in items:
             url = f"{reverse('warehouseview')}?search={item.code}"
@@ -171,8 +159,8 @@ class CreateWarehouse(TemplateView):
             new_button = f"""
                 <button type="button"
                     onclick="window.location.href='{reverse('warehouseview')}'"
-                    class="nav-link btn btn-link text-info">
-                    <i class="far fa-file"></i> New
+                    class="main-btn btn-sm primary-btn-group active btn-hover">
+                    <iconify-icon icon="solar:add-square-broken" class="fs-4"></iconify-icon> 
                 </button>
             """
             try:
@@ -187,28 +175,28 @@ class CreateWarehouse(TemplateView):
                         edit_button = f"""
                             <button type="button"
                                 onclick="window.location.href='{reverse('warehouseupdate', args=[obj.pk])}'"
-                                class="nav-link btn btn-link text-info">
-                                <i class="far fa-edit"></i> Edit
+                                class="main-btn btn-sm primary-btn-group active btn-hover">
+                                <iconify-icon icon="solar:pen-new-square-broken" class="fs-4"></iconify-icon> 
                             </button>
                         """
                         copy_button = f"""
                             <button type="button"
                                 onclick="window.location.href='{reverse('warehouseview')}?copy={obj.code}'"
-                                class="nav-link btn btn-link text-info">
-                                <i class="far fa-copy"></i> Copy
+                                class="main-btn btn-sm primary-btn-group active btn-hover">
+                                <iconify-icon icon="solar:document-text-linear" class="fs-4"></iconify-icon> 
                             </button>
                         """
                         delete_button = f"""
                             <button type="button"
                                 onclick="window.location.href='{reverse('warehouseupdate', args=[obj.pk])}'"
-                                class="nav-link btn btn-link text-danger">
-                                <i class="far fa-trash-alt"></i> Delete
+                                class="main-btn btn-sm primary-btn-group active btn-hover">
+                               <iconify-icon icon="solar:eraser-square-broken" class="fs-4"></iconify-icon>
                             </button>
                         """
                         save_button = """
                             <button type="button"
-                                class="btn btn-info btn-with-icon disabled">
-                                <i class="typcn typcn-input-checked"></i> Save
+                                class="main-btn btn-sm deactivate-btn-group text-muted">
+                                <iconify-icon icon="solar:check-square-broken" class="fs-4"></iconify-icon> Save
                             </button>              
                         """
 
@@ -218,6 +206,21 @@ class CreateWarehouse(TemplateView):
                 context['error'] = "Data tidak ditemukan."
         else:
             context['form'] = WarehouseForm()
+
+        context['navlink'] = f"""
+{save_button} 
+            {new_button}
+            {edit_button}
+            {copy_button}
+            {delete_button}
+        """
+        context['save_button'] = f"""
+            {save_button}
+        """
+        context['navtab'] = f"""
+            <a class="nav-link active" data-toggle="tab" href="#tab1"> Item Entry</a>
+            <a class="nav-link" data-toggle="tab" href="#tab2">Item List</a>
+        """
 
         return context
     
@@ -266,6 +269,7 @@ class UpdateWarehouse(UpdateView):
                                     class="nav-link btn btn-link text-info">
                                 <i class="far fa-edit"></i> Edit
                             </button>
+                            
                         """
                         copy_button = f"""
                             <button type="button"

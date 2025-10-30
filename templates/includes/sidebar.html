@@ -5,19 +5,20 @@
 <aside class="sidebar-nav-wrapper">
     <div class="navbar-logo">
     <a href="index.html">
-        <img src="assets/images/logo/logo.svg" alt="logo" />
+        <img src="{% static 'assets/images/logo.png' %}" class="w-75" alt="logo" />
     </a>
     </div>
     <nav class="sidebar-nav">
     <ul>
+        {% for section in menu_sections %}
         <li class="nav-item">
             <a href="tables.html">
-                
-                <p>Master Data</p>
+                <p>{{ section.title }}</p>
             </a>
         </li>
         <span class="divider"><hr /></span>
 
+        {% for label in section.labels %}
         <li class="nav-item nav-item-has-children mb-2">
             <a
                 href="#0"
@@ -29,26 +30,24 @@
                 aria-label="Toggle navigation"
             >
                 <iconify-icon icon="solar:box-line-duotone" class="fs-4 me-3"></iconify-icon>
-                <p>Inventory</p>
+                <p>{{ label.label }}</p>
             </a>
             <ul id="ddmenu_5" class="collapse dropdown-nav">
+                {% for item in label.items %}
                 <li class="dot-item ">
-                    <a href="form-elements.html"><p>Warehouse</p></a>
+                    <a href="{% url item.url %}"><p>{{ item.name }}</p></a>
                 </li>
-                <li class="dot-item ">
-                    <a href="form-elements.html"><p>Zone</p></a>
-                </li>
-                <li class="dot-item ">
-                    <a href="form-elements.html"><p>Storage Loc.</p></a>
-                </li>
+                {% endfor %}
             </ul>
         </li>
+        {% endfor %}
         <li class="nav-item mb-2">
             <a href="tables.html">
                 <iconify-icon icon="solar:archive-down-line-duotone" class="fs-4 me-3"></iconify-icon>
                 <p class="text">Supplier</p>
             </a>
         </li>
+        {% endfor %}
     </ul>
     </nav>
 </aside>

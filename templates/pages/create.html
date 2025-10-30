@@ -3,35 +3,56 @@
 {% load static %}
 {% block content %}
 
+<style>
+@media (min-width: 768px) {
+    .w-md-25 {
+        width: 25% !important;
+    }
+}
+</style>
+
 <div class="form-elements-wrapper">
     <div class="row">
         <div class="col-lg-12">
             <div class="card-style mb-30">
                 <div class="title mb-10 d-flex justify-content-between align-items-center">
-                    <form class="position-relative" role="search" method="get" action="">
-                        <input 
-                            type="search"
-                            name="search"
-                            value="{{ request.GET.search|default:'' }}"
-                            class="form-control pe-5"
-                            placeholder="Search..."
-                            aria-label="Search"
-                        >
-                        <button
+                    <!-- Form Search -->
+                    <form class="position-relative w-100 w-md-25" role="search" method="get" action="">
+                        {{ form_search }}
+                        <button 
                             type="submit"
                             class="btn position-absolute top-50 end-0 translate-middle-y me-2 border-0 bg-transparent"
                         >
                             <iconify-icon icon="solar:magnifer-broken" width="18" class="text-muted"></iconify-icon>
                         </button>
-                        </form>
-                <form method="post">
+                    </form>
+
+                    <form method="post">
                     {% csrf_token %}
-                    <div class="more-btn-wrapper">  
-                        {{ save_button|safe }}
+
+                    <!-- Navlink / Titik Tiga -->
+                    <div class="group-btn square-btn ms-2">
+                        <!-- Dropdown titik tiga (mobile) -->
+                        <div class="dropdown d-md-none">
+                            <button class="btn border-0 bg-transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <iconify-icon icon="bi:three-dots-vertical" width="20" class="text-muted"></iconify-icon>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>{{ navlink|safe }}</li>
+                            </ul>
+                        </div>
+
+                        <!-- Navlink tampil normal di layar besar -->
+                        <div class="d-none d-md-block">
+                            {{ navlink|safe }}
+                        </div>
                     </div>
                 </div>
-                {{ form.as_p }}
-                </form>
+
+
+
+                    {{ form.as_p }}
+                    </form>
             </div>
         </div>
     </div>
