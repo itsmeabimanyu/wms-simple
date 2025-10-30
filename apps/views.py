@@ -96,32 +96,32 @@ menu_sections = [
 ]
 
 NEW_BUTTON = """
-    <button type="button" class="nav-link btn btn-link text-secondary disabled">
-        <i class="far fa-file"></i> New
+    <button type="button" class="main-btn btn-sm deactivate-btn-group">
+        <iconify-icon icon="solar:add-square-broken" class="fs-4"></iconify-icon> 
     </button>
 """
 
 EDIT_BUTTON = """
-    <button type="button" class="nav-link btn btn-link text-secondary disabled">
-        <i class="far fa-edit"></i> Edit
+    <button type="button" class="main-btn btn-sm deactivate-btn-group">
+        <iconify-icon icon="solar:pen-new-square-broken" class="fs-4"></iconify-icon> 
     </button>
 """
 
 COPY_BUTTON = """
-    <button type="button" class="nav-link btn btn-link text-secondary disabled">
-        <i class="far fa-copy"></i> Copy
+    <button type="button" class="main-btn btn-sm deactivate-btn-group">
+        <iconify-icon icon="solar:document-text-linear" class="fs-4"></iconify-icon> 
     </button>
 """
 
 SAVE_BUTTON = """
     <button type="submit"
-        name="action" value="save" class="btn btn-info btn-with-icon ">
-        <i class="typcn typcn-input-checked"></i> Save
+        name="action" value="save" class="main-btn btn-sm secondary-btn btn-hover">
+        <iconify-icon icon="solar:check-square-broken" class="fs-4"></iconify-icon> Save
     </button>  
 """   
 DELETE_BUTTON = """
-    <button type="button" class="nav-link btn btn-link text-secondary disabled">
-        <i class="far fa-trash-alt"></i> Delete
+    <button type="button" class="main-btn btn-sm deactivate-btn-group">
+        <iconify-icon icon="solar:eraser-square-broken" class="fs-4"></iconify-icon>
     </button>
 """   
                

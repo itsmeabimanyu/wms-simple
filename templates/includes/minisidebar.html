@@ -2,27 +2,15 @@
 <aside class="sidebar-mini">
   <ul>
     <li>
-      <a href="#">
-        <iconify-icon icon="solar:home-2-bold-duotone"></iconify-icon>
-        <span class="menu-text">Home</span>
+      <a href="#" class="text-body">
+        <iconify-icon icon="solar:widget-line-duotone"></iconify-icon>
+        <span class="menu-text">Dashboard</span>
       </a>
     </li>
     <li>
-      <a href="#">
-        <iconify-icon icon="solar:table-bold-duotone"></iconify-icon>
-        <span class="menu-text">Tables</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-        <iconify-icon icon="solar:database-bold-duotone"></iconify-icon>
+      <a href="#" class="text-body">
+        <iconify-icon icon="solar:settings-line-duotone"></iconify-icon> 
         <span class="menu-text">Master Data</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-        <iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>
-        <span class="menu-text">Settings</span>
       </a>
     </li>
   </ul>
@@ -31,19 +19,19 @@
 
 <style>
 /* ==== Sidebar Mini (ikon) ==== */
-/* Sidebar Mini */
 .sidebar-mini {
   position: fixed;
   top: 0;
   left: 0;
-  width: 70px;
+  width: 75px;
   height: 100vh;
-  background-color: #1e1e2f;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
   z-index: 1100;
+  border-right: 1px solid #ddd;
+  background-color: #fff;
 }
 
 .sidebar-mini ul {
@@ -68,19 +56,33 @@
 }
 
 /* Teks menu tersembunyi default */
-  .menu-text {
+.menu-text {
   position: absolute;
-  left: 35px;   
+  left: 50px;   
   white-space: nowrap;
   opacity: 0;
   transform: translateX(-20px);
   transition: all 0.3s ease;
-  color: #fff; /* teks tetap putih */
-  background-color: #1e1e2f; /* sama dengan sidebar mini */
-  padding: 15px 15px; /* beri jarak supaya tidak menempel ikon */
-  border-radius: 4px; /* opsional, supaya terlihat lebih modern */
+  color: #fff;
+  background-color: #1e1e2f;
+  padding: 10px 10px;
+  border-radius: 4px;
   pointer-events: none;
-  font-size: 18px;
+  font-size: 16px;
+}
+
+/* Tambahkan ujung lancip seperti balon chat */
+.menu-text::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -8px; /* posisi ujung lancip (bisa ubah ke kanan bila perlu) */
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid #1e1e2f; /* warna sama dengan background menu-text */
 }
 
 
@@ -90,12 +92,20 @@
   transform: translateX(10px);
 }
 
-/* Efek hover ikon */
-.sidebar-mini li:hover iconify-icon {
-  color: #4fc3f7;
-  transform: scale(1.1);
-  transition: all 0.3s ease;
+.sidebar-mini iconify-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
 }
+
+.sidebar-mini li:hover iconify-icon {
+  background-color:rgb(245, 248, 252); /* warna lingkaran */
+  color: #4fc3f7; /* warna ikon saat hover */
+}
+
 
 /* ==== Sidebar utama ==== */
 .sidebar-nav-wrapper {
