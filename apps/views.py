@@ -116,7 +116,7 @@ COPY_BUTTON = """
 
 SAVE_BUTTON = """
     <button type="submit"
-        name="action" value="save" class="main-btn btn-sm secondary-btn btn-hover">
+        name="action" value="save" class="main-btn btn-sm primary-btn-group active btn-hover">
         <iconify-icon icon="solar:check-square-broken" class="fs-4"></iconify-icon>
     </button>  
 """   
@@ -131,26 +131,30 @@ class CreateWarehouse(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # variable button
         new_button = NEW_BUTTON
         edit_button = EDIT_BUTTON
         copy_button = COPY_BUTTON
         save_button = SAVE_BUTTON
         delete_button = DELETE_BUTTON
-
         context = {
             "page_title": "Manage Warehouse", 
             "menu_sections": menu_sections,
         }
 
+        # untuk form
         context['form'] = WarehouseForm
         context['form_search'] = SearchForm(self.request.GET or None)
+
+        # untuk listview nya
         items = Warehouse.objects.all()
         for item in items:
             url = f"{reverse('warehouseview')}?search={item.code}"
             item.onclick_attr = f'onclick="window.location.href=\'{url}\'"'
-
         context['items'] = items
 
+        '''
         search_query = self.request.GET.get('search')
         copy_query = self.request.GET.get('copy')
         query = search_query or copy_query
@@ -196,7 +200,7 @@ class CreateWarehouse(TemplateView):
                         save_button = """
                             <button type="button"
                                 class="main-btn btn-sm deactivate-btn-group text-muted">
-                                <iconify-icon icon="solar:check-square-broken" class="fs-4"></iconify-icon> Save
+                                <iconify-icon icon="solar:check-square-broken" class="fs-4"></iconify-icon>
                             </button>              
                         """
 
@@ -206,17 +210,11 @@ class CreateWarehouse(TemplateView):
                 context['error'] = "Data tidak ditemukan."
         else:
             context['form'] = WarehouseForm()
+        '''
 
-        context['navlink'] = f"""
-{save_button} 
-            {new_button}
-            {edit_button}
-            {copy_button}
-            {delete_button}
-        """
-        context['save_button'] = f"""
-            {save_button}
-        """
+        # untuk tombol group
+        context['group_button'] = f'{save_button}{new_button}{edit_button}{copy_button}{delete_button}'
+
         context['navtab'] = f"""
             <a class="nav-link active" data-toggle="tab" href="#tab1"> Item Entry</a>
             <a class="nav-link" data-toggle="tab" href="#tab2">Item List</a>
@@ -232,7 +230,36 @@ class CreateWarehouse(TemplateView):
                  form.save()
 
         return redirect(self.request.META.get('HTTP_REFERER'))
-    
+
+class SearchWarehouse(TemplateView):
+    template_name = 'pages/partials/form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_query = self.request.GET.get('search')
+
+        try:
+            data = Warehouse.objects.get(code=search_query)
+            form = WarehouseForm(instance=data)
+
+            if data:
+                # disable fieldnya
+                for field in form.fields.values():
+                    field.widget.attrs['disabled'] = True
+                    field.widget.attrs['placeholder'] = ""
+
+                    new_button = NEW_BUTTON.replace(
+                        'main-btn btn-sm deactivate-btn-group text-muted',
+                        'btn btn-outline-success btn-sm'
+                    )
+
+        except Warehouse.DoesNotExist:
+            form = WarehouseForm()
+
+        context['form'] = form
+        context['group_button'] = f'{new_button}'
+        return context
+
 class UpdateWarehouse(UpdateView):
     template_name = 'pages/create.html'
     model = Warehouse

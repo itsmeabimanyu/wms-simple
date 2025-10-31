@@ -30,9 +30,8 @@ class WarehouseForm(forms.ModelForm):
                 self.fields['tgl_akhir_kontrak'].initial = kontrak.tgl_akhir_kontrak.strftime('%d-%m-%Y')
         """
 
-class SearchForm(forms.Form):
+'''class SearchForm(forms.Form):
     search = forms.CharField(
-        required=False,
         label='',
         widget=forms.TextInput(
             attrs={
@@ -42,4 +41,18 @@ class SearchForm(forms.Form):
                 'aria-label': 'Search',
             }
         )
-    )
+    )'''
+
+class SearchForm(forms.Form):
+    search = forms.CharField(label="")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["search"].widget.attrs.update({
+            'class': 'form-control pe-5',
+            'placeholder': 'Search...',
+            'hx-get': '/warehouse/search/',
+            'hx-trigger': 'keyup changed delay:500ms',
+            'hx-target':'#form-area',
+            'hx-include': '[name="search"]'
+        })
